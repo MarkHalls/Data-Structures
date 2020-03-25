@@ -31,8 +31,8 @@ class LRUCache:
             old_node = self.storage[key]
             new_node = self.dll.move_to_front(old_node)
             self.storage[key] = new_node
-            # node.value is [key, value]
-            return new_node.value[1]
+
+            return new_node.value[key]
         else:
             return None
 
@@ -50,15 +50,14 @@ class LRUCache:
     def set(self, key, value):
         if key in self.storage.items():
             node = self.storage[key]
-            node.value = (key, value)
+            node.value = {key: value}
             return self.dll.move_to_front(node)
 
-        new_node = self.dll.add_to_head((key, value))
+        new_node = self.dll.add_to_head({key: value})
         self.storage[key] = new_node
 
         if len(self.storage) > self.limit:
             node_to_remove = self.dll.tail
-
-            # node.value is [key, value]
-            self.storage.pop(node_to_remove.value[0], None)
+            key_to_remove = next(iter(node_to_remove.value))
+            self.storage.pop(key_to_remove, None)
             self.dll.delete(node_to_remove)
