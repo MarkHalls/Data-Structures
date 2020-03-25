@@ -59,7 +59,14 @@ class BinarySearchTree:
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        def run_cb(current_node, cb):
+            cb(current_node.value)
+            if current_node.left:
+                run_cb(current_node.left, cb)
+            if current_node.right:
+                run_cb(current_node.right, cb)
+
+        run_cb(self, cb)
 
     # DAY 2 Project -----------------------
 
