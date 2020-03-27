@@ -104,7 +104,7 @@ class DoublyLinkedList:
         node = self.tail
         value = self.tail.value
         self.delete(self.tail)
-        return value
+        return node
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
